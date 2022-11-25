@@ -1,0 +1,767 @@
+SYSTEM_DATA_TYPES(7)                                                      Linux Programmer's Manual                                                      SYSTEM_DATA_TYPES(7)
+
+[1mNAME[0m
+       system_data_types - overview of system data types
+
+[1mDESCRIPTION[0m
+       [4maiocb[0m
+              [4mInclude[24m: [4m<aio.h>[24m.
+
+              struct aiocb {
+                  int             aio_fildes;    /* File descriptor */
+                  off_t           aio_offset;    /* File offset */
+                  volatile void  *aio_buf;       /* Location of buffer */
+                  size_t          aio_nbytes;    /* Length of transfer */
+                  int             aio_reqprio;   /* Request priority offset */
+                  struct sigevent aio_sigevent;  /* Signal number and value */
+                  int             aio_lio_opcode;/* Operation to be performed */
+              };
+
+              For further information about this structure, see [1maio[22m(7).
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1maio_cancel[22m(3), [1maio_error[22m(3), [1maio_fsync[22m(3), [1maio_read[22m(3), [1maio_return[22m(3), [1maio_suspend[22m(3), [1maio_write[22m(3), [1mlio_listio[22m(3)
+
+       [4mblkcnt_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<sys/stat.h>[24m.
+
+              Used for file block counts.  According to POSIX, it shall be a signed integer type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mstat[22m(2)
+
+       [4mblksize_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<sys/stat.h>[24m.
+
+              Used for file block sizes.  According to POSIX, it shall be a signed integer type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mstat[22m(2)
+
+       [4mcc_t[0m
+              [4mInclude[24m: [4m<termios.h>[24m.
+
+              Used for terminal special characters.  According to POSIX, it shall be an unsigned integer type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mtermios[22m(3)
+
+       [4mclock_t[0m
+              [4mInclude[24m: [4m<time.h>[24m or [4m<sys/types.h>[24m.  Alternatively, [4m<sys/time.h>[24m.
+
+              Used for system time in clock ticks or [1mCLOCKS_PER_SEC [22m(defined in [4m<time.h>[24m).  According to POSIX, it shall be an integer type or a real-floating type.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mtimes[22m(2), [1mclock[22m(3)
+
+       [4mclockid_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<time.h>[24m.
+
+              Used for clock ID type in the clock and timer functions.  According to POSIX, it shall be defined as an arithmetic type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mclock_adjtime[22m(2), [1mclock_getres[22m(2), [1mclock_nanosleep[22m(2), [1mtimer_create[22m(2), [1mclock_getcpuclockid[22m(3)
+
+       [4mdev_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<sys/stat.h>[24m.
+
+              Used for device IDs.  According to POSIX, it shall be an integer type.  For further details of this type, see [1mmakedev[22m(3).
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mmknod[22m(2), [1mstat[22m(2)
+
+       [4mdiv_t[0m
+              [4mInclude[24m: [4m<stdlib.h>[24m.
+
+              typedef struct {
+                  int quot; /* Quotient */
+                  int rem;  /* Remainder */
+              } div_t;
+
+              It is the type of the value returned by the [1mdiv[22m(3) function.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mdiv[22m(3)
+
+       [4mdouble_t[0m
+              [4mInclude[24m: [4m<math.h>[24m.
+
+              The  implementation's  most  efficient  floating  type  at  least  as  wide  as [4mdouble[24m.  Its type depends on the value of the macro [1mFLT_EVAL_METHOD [22m(defined in
+              [4m<float.h>[24m):
+
+              0      [4mdouble_t[24m is [4mdouble[24m.
+
+              1      [4mdouble_t[24m is [4mdouble[24m.
+
+              2      [4mdouble_t[24m is [4mlong[24m [4mdouble[24m.
+
+              For other values of [1mFLT_EVAL_METHOD[22m, the type of [4mdouble_t[24m is implementation-defined.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4mfloat_t[24m type in this page.
+
+       [4mfd_set[0m
+              [4mInclude[24m: [4m<sys/select.h>[24m.  Alternatively, [4m<sys/time.h>[24m.
+
+              A structure type that can represent a set of file descriptors.  According to POSIX, the maximum number of file descriptors in an [4mfd_set[24m structure is the  value
+              of the macro [1mFD_SETSIZE[22m.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mselect[22m(2)
+
+       [4mfenv_t[0m
+              [4mInclude[24m: [4m<fenv.h>[24m.
+
+              This type represents the entire floating-point environment, including control modes and status flags; for further details, see [1mfenv[22m(3).
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mfenv[22m(3)
+
+       [4mfexcept_t[0m
+              [4mInclude[24m: [4m<fenv.h>[24m.
+
+              This type represents the floating-point status flags collectively; for further details see [1mfenv[22m(3).
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mfenv[22m(3)
+
+       [4mFILE[0m
+              [4mInclude[24m: [4m<stdio.h>[24m.  Alternatively, [4m<wchar.h>[24m.
+
+              An object type used for streams.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mfclose[22m(3), [1mflockfile[22m(3), [1mfopen[22m(3), [1mfprintf[22m(3), [1mfread[22m(3), [1mfscanf[22m(3), [1mstdin[22m(3), [1mstdio[22m(3)
+
+       [4mfloat_t[0m
+              [4mInclude[24m: [4m<math.h>[24m.
+
+              The  implementation's  most  efficient  floating  type  at  least  as  wide  as  [4mfloat[24m.  Its type depends on the value of the macro [1mFLT_EVAL_METHOD [22m(defined in
+              [4m<float.h>[24m):
+
+              0      [4mfloat_t[24m is [4mfloat[24m.
+
+              1      [4mfloat_t[24m is [4mdouble[24m.
+
+              2      [4mfloat_t[24m is [4mlong[24m [4mdouble[24m.
+
+              For other values of [1mFLT_EVAL_METHOD[22m, the type of [4mfloat_t[24m is implementation-defined.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4mdouble_t[24m type in this page.
+
+       [4mgid_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<grp.h>[24m, [4m<pwd.h>[24m, [4m<signal.h>[24m, [4m<stropts.h>[24m, [4m<sys/ipc.h>[24m, [4m<sys/stat.h>[24m, or [4m<unistd.h>[24m.
+
+              A type used to hold group IDs.  According to POSIX, this shall be an integer type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mchown[22m(2), [1mgetgid[22m(2), [1mgetegid[22m(2), [1mgetgroups[22m(2), [1mgetresgid[22m(2), [1mgetgrnam[22m(3), [1mcredentials[22m(7)
+
+       [4mid_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<sys/resource.h>[24m.
+
+              A type used to hold a general identifier.  According to POSIX, this shall be an integer type that can be used to contain a [4mpid_t[24m, [4muid_t[24m, or [4mgid_t[24m.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mgetpriority[22m(2), [1mwaitid[22m(2)
+
+       [4mimaxdiv_t[0m
+              [4mInclude[24m: [4m<inttypes.h>[24m.
+
+              typedef struct {
+                  intmax_t    quot; /* Quotient */
+                  intmax_t    rem;  /* Remainder */
+              } imaxdiv_t;
+
+              It is the type of the value returned by the [1mimaxdiv[22m(3) function.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mimaxdiv[22m(3)
+
+       [4mintmax_t[0m
+              [4mInclude[24m: [4m<stdint.h>[24m.  Alternatively, [4m<inttypes.h>[24m.
+
+              A signed integer type capable of representing any value of any signed integer type supported by the implementation.  According to the C language  standard,  it
+              shall be capable of storing values in the range [[1mINTMAX_MIN[22m, [1mINTMAX_MAX[22m].
+
+              The macro [1mINTMAX_C[22m() expands its argument to an integer constant of type [4mintmax_t[24m.
+
+              The length modifier for [4mintmax_t[24m for the [1mprintf[22m(3) and the [1mscanf[22m(3) families of functions is [1mj[22m; resulting commonly in [1m%jd [22mor [1m%ji [22mfor printing [4mintmax_t[24m values.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mBugs[24m: [4mintmax_t[24m is not large enough to represent values of type [4m__int128[24m in implementations where [4m__int128[24m is defined and [4mlong[24m [4mlong[24m is less than 128 bits wide.
+
+              [4mSee[24m [4malso[24m: the [4muintmax_t[24m type in this page.
+
+       [4mint[24mN[4m_t[0m
+              [4mInclude[24m: [4m<stdint.h>[24m.  Alternatively, [4m<inttypes.h>[24m.
+
+              [4mint8_t[24m, [4mint16_t[24m, [4mint32_t[24m, [4mint64_t[0m
+
+              A  signed  integer  type of a fixed width of exactly N bits, N being the value specified in its type name.  According to the C language standard, they shall be
+              capable of storing values in the range [[1mINT[22mN[1m_MIN[22m, [1mINT[22mN[1m_MAX[22m], substituting N by the appropriate number.
+
+              According to POSIX, [4mint8_t[24m, [4mint16_t[24m, and [4mint32_t[24m are required; [4mint64_t[24m is only required in implementations that provide integer types with width  64;  and  all
+              other types of this form are optional.
+
+              The  length modifiers for the [4mint[24mN[4m_t[24m types for the [1mprintf[22m(3) family of functions are expanded by macros of the forms [1mPRId[22mN and [1mPRIi[22mN (defined in [4m<inttypes.h>[24m);
+              resulting for example in [1m%"PRId64" [22mor [1m%"PRIi64" [22mfor printing [4mint64_t[24m values.  The length modifiers for the [4mint[24mN[4m_t[24m types for the [1mscanf[22m(3)  family  of  functions
+              are expanded by macros of the forms [1mSCNd[22mN and [1mSCNi[22mN, (defined in [4m<inttypes.h>[24m); resulting for example in [1m%"SCNd8" [22mor [1m%"SCNi8" [22mfor scanning [4mint8_t[24m values.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4mintmax_t[24m, [4muint[24mN[4m_t[24m, and [4muintmax_t[24m types in this page.
+
+       [4mintptr_t[0m
+              [4mInclude[24m: [4m<stdint.h>[24m.  Alternatively, [4m<inttypes.h>[24m.
+
+              A  signed integer type such that any valid ([4mvoid[24m [4m*[24m) value can be converted to this type and back.  According to the C language standard, it shall be capable of
+              storing values in the range [[1mINTPTR_MIN[22m, [1mINTPTR_MAX[22m].
+
+              The length modifier for [4mintptr_t[24m for the [1mprintf[22m(3) family of functions is expanded by the macros [1mPRIdPTR [22mand [1mPRIiPTR [22m(defined in [4m<inttypes.h>[24m); resulting  com‐
+              monly  in  [1m%"PRIdPTR"  [22mor  [1m%"PRIiPTR"  [22mfor  printing [4mintptr_t[24m values.  The length modifier for [4mintptr_t[24m for the [1mscanf[22m(3) family of functions is expanded by the
+              macros [1mSCNdPTR [22mand [1mSCNiPTR, [22m(defined in [4m<inttypes.h>[24m); resulting commonly in [1m%"SCNdPTR" [22mor [1m%"SCNiPTR" [22mfor scanning [4mintptr_t[24m values.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4muintptr_t[24m and [4mvoid[24m [4m*[24m types in this page.
+
+       [4mlconv[0m
+              [4mInclude[24m: [4m<locale.h>[24m.
+
+              struct lconv {                  /* Values in the "C" locale: */
+                  char   *decimal_point;      /* "." */
+                  char   *thousands_sep;      /* "" */
+                  char   *grouping;           /* "" */
+                  char   *mon_decimal_point;  /* "" */
+                  char   *mon_thousands_sep;  /* "" */
+                  char   *mon_grouping;       /* "" */
+                  char   *positive_sign;      /* "" */
+                  char   *negative_sign;      /* "" */
+                  char   *currency_symbol;    /* "" */
+                  char    frac_digits;        /* CHAR_MAX */
+                  char    p_cs_precedes;      /* CHAR_MAX */
+                  char    n_cs_precedes;      /* CHAR_MAX */
+                  char    p_sep_by_space;     /* CHAR_MAX */
+                  char    n_sep_by_space;     /* CHAR_MAX */
+                  char    p_sign_posn;        /* CHAR_MAX */
+                  char    n_sign_posn;        /* CHAR_MAX */
+                  char   *int_curr_symbol;    /* "" */
+                  char    int_frac_digits;    /* CHAR_MAX */
+                  char    int_p_cs_precedes;  /* CHAR_MAX */
+                  char    int_n_cs_precedes;  /* CHAR_MAX */
+                  char    int_p_sep_by_space; /* CHAR_MAX */
+                  char    int_n_sep_by_space; /* CHAR_MAX */
+                  char    int_p_sign_posn;    /* CHAR_MAX */
+                  char    int_n_sign_posn;    /* CHAR_MAX */
+              };
+
+              Contains members related to the formatting of numeric values.  In the "C" locale, its members have the values shown in the comments above.
+
+              [4mConforming[24m [4mto[24m: C11 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1msetlocale[22m(3), [1mlocaleconv[22m(3), [1mcharsets[22m(7), [1mlocale[22m(7)
+
+       [4mldiv_t[0m
+              [4mInclude[24m: [4m<stdlib.h>[24m.
+
+              typedef struct {
+                  long    quot; /* Quotient */
+                  long    rem;  /* Remainder */
+              } ldiv_t;
+
+              It is the type of the value returned by the [1mldiv[22m(3) function.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mldiv[22m(3)
+
+       [4mlldiv_t[0m
+              [4mInclude[24m: [4m<stdlib.h>[24m.
+
+              typedef struct {
+                  long long   quot; /* Quotient */
+                  long long   rem;  /* Remainder */
+              } lldiv_t;
+
+              It is the type of the value returned by the [1mlldiv[22m(3) function.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mlldiv[22m(3)
+
+       [4mmode_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<fcntl.h>[24m, [4m<ndbm.h>[24m, [4m<spawn.h>[24m, [4m<sys/ipc.h>[24m, [4m<sys/mman.h>[24m, or [4m<sys/stat.h>[24m.
+
+              Used for some file attributes (e.g., file mode).  According to POSIX, it shall be an integer type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mchmod[22m(2), [1mmkdir[22m(2), [1mopen[22m(2), [1mstat[22m(2), [1mumask[22m(2)
+
+       [4moff64_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.
+
+              Used for file sizes.  It is a 64-bit signed integer type.
+
+              [4mConforming[24m [4mto[24m: Present in glibc.  It is not standardized by the C language standard nor POSIX.
+
+              [4mNotes[24m: The feature test macro [1m_LARGEFILE64_SOURCE [22mhas to be defined for this type to be available.
+
+              [4mSee[24m [4malso[24m: [1mcopy_file_range[22m(2), [1mreadahead[22m(2), [1msync_file_range[22m(2), [1mlseek64[22m(3), [1mfeature_test_macros[22m(7)
+
+              See also the [4moff_t[24m type in this page.
+
+       [4moff_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<aio.h>[24m, [4m<fcntl.h>[24m, [4m<stdio.h>[24m, [4m<sys/mman.h>[24m, [4m<sys/stat.h.h>[24m, or [4m<unistd.h>[24m.
+
+              Used for file sizes.  According to POSIX, this shall be a signed integer type.
+
+              [4mVersions[24m: [4m<aio.h>[24m and [4m<stdio.h>[24m define [4moff_t[24m since POSIX.1-2008.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mNotes[24m: On some architectures, the width of this type can be controlled with the feature test macro [1m_FILE_OFFSET_BITS[22m.
+
+              [4mSee[24m [4malso[24m: [1mlseek[22m(2), [1mmmap[22m(2), [1mposix_fadvise[22m(2), [1mpread[22m(2), [1mtruncate[22m(2), [1mfseeko[22m(3), [1mlockf[22m(3), [1mposix_fallocate[22m(3), [1mfeature_test_macros[22m(7)
+
+              See also the [4moff64_t[24m type in this page.
+
+       [4mpid_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively,  [4m<fcntl.h>[24m,  [4m<sched.h>[24m,  [4m<signal.h>[24m,  [4m<spawn.h>[24m,  [4m<sys/msg.h>[24m,  [4m<sys/sem.h>[24m,  [4m<sys/shm.h>[24m,  [4m<sys/wait.h>[24m,  [4m<termios.h>[24m,
+              [4m<time.h>[24m, [4m<unistd.h>[24m, or [4m<utmpx.h>[24m.
+
+              This  type  is used for storing process IDs, process group IDs, and session IDs.  According to POSIX, it shall be a signed integer type, and the implementation
+              shall support one or more programming environments where the width of [4mpid_t[24m is no greater than the width of the type [4mlong[24m.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mfork[22m(2), [1mgetpid[22m(2), [1mgetppid[22m(2), [1mgetsid[22m(2), [1mgettid[22m(2), [1mgetpgid[22m(2), [1mkill[22m(2), [1mpidfd_open[22m(2),  [1msched_setscheduler[22m(2),  [1mwaitpid[22m(2),  [1msigqueue[22m(3),  [1mcreden‐[0m
+              [1mtials[22m(7),
+
+       [4mptrdiff_t[0m
+              [4mInclude[24m: [4m<stddef.h>[24m.
+
+              Used for a count of elements, and array indices.  It is the result of subtracting two pointers.  According to the C language standard, it shall be a signed in‐
+              teger type capable of storing values in the range [[1mPTRDIFF_MIN[22m, [1mPTRDIFF_MAX[22m].
+
+              The length modifier for [4mptrdiff_t[24m for the [1mprintf[22m(3) and the [1mscanf[22m(3) families of functions is [1mt[22m; resulting commonly in [1m%td [22mor [1m%ti [22mfor printing  [4mptrdiff_t[24m  val‐
+              ues.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4msize_t[24m and [4mssize_t[24m types in this page.
+
+       [4mregex_t[0m
+              [4mInclude[24m: [4m<regex.h>[24m.
+
+              typedef struct {
+                  size_t  re_nsub; /* Number of parenthesized subexpressions */
+              } regex_t;
+
+              This is a structure type used in regular expression matching.  It holds a compiled regular expression, compiled with [1mregcomp[22m(3).
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mregex[22m(3)
+
+       [4mregmatch_t[0m
+              [4mInclude[24m: [4m<regex.h>[24m.
+
+              typedef struct {
+                  regoff_t    rm_so; /* Byte offset from start of string
+                                        to start of substring */
+                  regoff_t    rm_eo; /* Byte offset from start of string of
+                                        the first character after the end of
+                                        substring */
+              } regmatch_t;
+
+              This is a structure type used in regular expression matching.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mregexec[22m(3)
+
+       [4mregoff_t[0m
+              [4mInclude[24m: [4m<regex.h>[24m.
+
+              According to POSIX, it shall be a signed integer type capable of storing the largest value that can be stored in either a [4mptrdiff_t[24m type or a [4mssize_t[24m type.
+
+              [4mVersions[24m: Prior to POSIX.1-2008, the type was capable of storing the largest value that can be stored in either an [4moff_t[24m type or a [4mssize_t[24m type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4mregmatch_t[24m structure and the [4mptrdiff_t[24m and [4mssize_t[24m types in this page.
+
+       [4msigevent[0m
+              [4mInclude[24m: [4m<signal.h>[24m.  Alternatively, [4m<aio.h>[24m, [4m<mqueue.h>[24m, or [4m<time.h>[24m.
+
+              struct sigevent {
+                  int             sigev_notify; /* Notification type */
+                  int             sigev_signo;  /* Signal number */
+                  union sigval    sigev_value;  /* Signal value */
+                  void          (*sigev_notify_function)(union sigval);
+                                                /* Notification function */
+                  pthread_attr_t *sigev_notify_attributes;
+                                                /* Notification attributes */
+              };
+
+              For further details about this type, see [1msigevent[22m(7).
+
+              [4mVersions[24m: [4m<aio.h>[24m and [4m<time.h>[24m define [4msigevent[24m since POSIX.1-2008.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mtimer_create[22m(2), [1mgetaddrinfo_a[22m(3), [1mlio_listio[22m(3), [1mmq_notify[22m(3)
+
+              See also the [4maiocb[24m structure in this page.
+
+       [4msiginfo_t[0m
+              [4mInclude[24m: [4m<signal.h>[24m.  Alternatively, [4m<sys/wait.h>[24m.
+
+              typedef struct {
+                  int      si_signo;  /* Signal number */
+                  int      si_code;   /* Signal code */
+                  pid_t    si_pid;    /* Sending process ID */
+                  uid_t    si_uid;    /* Real user ID of sending process */
+                  void    *si_addr;   /* Address of faulting instruction */
+                  int      si_status; /* Exit value or signal */
+                  union sigval si_value;  /* Signal value */
+              } siginfo_t;
+
+              Information associated with a signal.  For further details on this structure (including additional, Linux-specific fields), see [1msigaction[22m(2).
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mpidfd_send_signal[22m(2), [1mrt_sigqueueinfo[22m(2), [1msigaction[22m(2), [1msigwaitinfo[22m(2), [1mpsiginfo[22m(3)
+
+       [4msigset_t[0m
+              [4mInclude[24m: [4m<signal.h>[24m.  Alternatively, [4m<spawn.h>[24m, or [4m<sys/select.h>[24m.
+
+              This is a type that represents a set of signals.  According to POSIX, this shall be an integer or structure type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mepoll_pwait[22m(2), [1mppoll[22m(2), [1mpselect[22m(2), [1msigaction[22m(2), [1msignalfd[22m(2), [1msigpending[22m(2), [1msigprocmask[22m(2), [1msigsuspend[22m(2), [1msigwaitinfo[22m(2), [1msignal[22m(7)
+
+       [4msigval[0m
+              [4mInclude[24m: [4m<signal.h>[24m.
+
+              union sigval {
+                  int     sigval_int; /* Integer value */
+                  void   *sigval_ptr; /* Pointer value */
+              };
+
+              Data passed with a signal.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mpthread_sigqueue[22m(3), [1msigqueue[22m(3), [1msigevent[22m(7)
+
+              See also the [4msigevent[24m structure and the [4msiginfo_t[24m type in this page.
+
+       [4msize_t[0m
+              [4mInclude[24m:  [4m<stddef.h>[24m  or  [4m<sys/types.h>[24m.   Alternatively,  [4m<aio.h>[24m,  [4m<glob.h>[24m,  [4m<grp.h>[24m,  [4m<iconv.h>[24m,  [4m<monetary.h>[24m,  [4m<mqueue.h>[24m,  [4m<ndbm.h>[24m, [4m<pwd.h>[24m, [4m<regex.h>[24m,
+              [4m<search.h>[24m, [4m<signal.h>[24m, [4m<stdio.h>[24m, [4m<stdlib.h>[24m, [4m<string.h>[24m, [4m<strings.h>[24m,  [4m<sys/mman.h>[24m,  [4m<sys/msg.h>[24m,  [4m<sys/sem.h>[24m,  [4m<sys/shm.h>[24m,  [4m<sys/socket.h>[24m,  [4m<sys/uio.h>[24m,
+              [4m<time.h>[24m, [4m<unistd.h>[24m, [4m<wchar.h>[24m, or [4m<wordexp.h>[24m.
+
+              Used  for  a  count  of bytes.  It is the result of the [4msizeof[24m operator.  According to the C language standard, it shall be an unsigned integer type capable of
+              storing values in the range [0, [1mSIZE_MAX[22m].  According to POSIX, the implementation shall support one or more programming environments where the width of [4msize_t[0m
+              is no greater than the width of the type [4mlong[24m.
+
+              The length modifier for [4msize_t[24m for the [1mprintf[22m(3) and the [1mscanf[22m(3) families of functions is [1mz[22m; resulting commonly in [1m%zu [22mor [1m%zx [22mfor printing [4msize_t[24m values.
+
+              [4mVersions[24m: [4m<aio.h>[24m, [4m<glob.h>[24m, [4m<grp.h>[24m, [4m<iconv.h>[24m, [4m<mqueue.h>[24m, [4m<pwd.h>[24m, [4m<signal.h>[24m, and [4m<sys/socket.h>[24m define [4msize_t[24m since POSIX.1-2008.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mread[22m(2), [1mwrite[22m(2), [1mfread[22m(3), [1mfwrite[22m(3), [1mmemcmp[22m(3), [1mmemcpy[22m(3), [1mmemset[22m(3), [1moffsetof[22m(3)
+
+              See also the [4mptrdiff_t[24m and [4mssize_t[24m types in this page.
+
+       [4msockaddr[0m
+              [4mInclude[24m: [4m<sys/socket.h>[24m.
+
+              struct sockaddr {
+                  sa_family_t sa_family; /* Address family */
+                  char        sa_data[]; /* Socket address */
+              };
+
+              Describes a socket address.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1maccept[22m(2), [1mgetpeername[22m(2), [1mgetsockname[22m(2), [1msocket[22m(2)
+
+       [4msocklen_t[0m
+              [4mInclude[24m: [4m<sys/socket.h>[24m.  Alternatively, [4m<netdb.h>[24m.
+
+              Describes the length of a socket address.  According to POSIX, this shall be an integer type of at least 32 bits.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1maccept[22m(2), [1mbind[22m(2), [1mconnect[22m(2), [1mgethostbyaddr[22m(2), [1mgetnameinfo[22m(2), [1msocket[22m(2)
+
+              See also the [4msockaddr[24m structure in this page.
+
+       [4mssize_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<aio.h>[24m, [4m<monetary.h>[24m, [4m<mqueue.h>[24m, [4m<stdio.h>[24m, [4m<sys/msg.h>[24m, [4m<sys/socket.h>[24m, [4m<sys/uio.h>[24m, or [4m<unistd.h>[24m.
+
+              Used  for  a count of bytes or an error indication.  According to POSIX, it shall be a signed integer type capable of storing values at least in the range [-1,
+              [1mSSIZE_MAX[22m], and the implementation shall support one or more programming environments where the width of [4mssize_t[24m is no greater than the width of the type [4mlong[24m.
+
+              Glibc and most other implementations provide a length modifier for [4mssize_t[24m for the [1mprintf[22m(3) and the [1mscanf[22m(3) families of functions, which is [1mz[22m; resulting com‐
+              monly in [1m%zd [22mor [1m%zi [22mfor printing [4mssize_t[24m values.  Although [1mz [22mworks for [4mssize_t[24m on most implementations, portable POSIX programs should avoid using it—for exam‐
+              ple, by converting the value to [4mintmax_t[24m and using its length modifier ([1mj[22m).
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mread[22m(2), [1mreadlink[22m(2), [1mreadv[22m(2), [1mrecv[22m(2), [1msend[22m(2), [1mwrite[22m(2)
+
+              See also the [4mptrdiff_t[24m and [4msize_t[24m types in this page.
+
+       [4msuseconds_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<sys/select.h>[24m, or [4m<sys/time.h>[24m.
+
+              Used for time in microseconds.  According to POSIX, it shall be a signed integer type capable of storing values at least in the range [-1,  1000000],  and  the
+              implementation shall support one or more programming environments where the width of [4msuseconds_t[24m is no greater than the width of the type [4mlong[24m.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4mtimeval[24m structure in this page.
+
+       [4mtime_t[0m
+              [4mInclude[24m: [4m<time.h>[24m or [4m<sys/types.h>[24m.  Alternatively, [4m<sched.h>[24m, [4m<sys/msg.h>[24m, [4m<sys/select.h>[24m, [4m<sys/sem.h>[24m, [4m<sys/shm.h>[24m, [4m<sys/stat.h>[24m, [4m<sys/time.h>[24m, or [4m<utime.h>[24m.
+
+              Used for time in seconds.  According to POSIX, it shall be an integer type.
+
+              [4mVersions[24m: [4m<sched.h>[24m defines [4mtime_t[24m since POSIX.1-2008.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mstime[22m(2), [1mtime[22m(2), [1mctime[22m(3), [1mdifftime[22m(3)
+
+       [4mtimer_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<time.h>[24m.
+
+              Used for timer ID returned by [1mtimer_create[22m(2).  According to POSIX, there are no defined comparison or assignment operators for this type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mtimer_create[22m(2), [1mtimer_delete[22m(2), [1mtimer_getoverrun[22m(2), [1mtimer_settime[22m(2)
+
+       [4mtimespec[0m
+              [4mInclude[24m: [4m<time.h>[24m.  Alternatively, [4m<aio.h>[24m, [4m<mqueue.h>[24m, [4m<sched.h>[24m, [4m<signal.h>[24m, [4m<sys/select.h>[24m, or [4m<sys/stat.h>[24m.
+
+              struct timespec {
+                  time_t  tv_sec;  /* Seconds */
+                  long    tv_nsec; /* Nanoseconds */
+              };
+
+              Describes times in seconds and nanoseconds.
+
+              [4mConforming[24m [4mto[24m: C11 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mclock_gettime[22m(2), [1mclock_nanosleep[22m(2), [1mnanosleep[22m(2), [1mtimerfd_gettime[22m(2), [1mtimer_gettime[22m(2)
+
+       [4mtimeval[0m
+              [4mInclude[24m: [4m<sys/time.h>[24m.  Alternatively, [4m<sys/resource.h>[24m, [4m<sys/select.h>[24m, or [4m<utmpx.h>[24m.
+
+              struct timeval {
+                  time_t      tv_sec;  /* Seconds */
+                  suseconds_t tv_usec; /* Microseconds */
+              };
+
+              Describes times in seconds and microseconds.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mgettimeofday[22m(2), [1mselect[22m(2), [1mutimes[22m(2), [1madjtime[22m(3), [1mfutimes[22m(3), [1mtimeradd[22m(3)
+
+       [4muid_t[0m
+              [4mInclude[24m: [4m<sys/types.h>[24m.  Alternatively, [4m<pwd.h>[24m, [4m<signal.h>[24m, [4m<stropts.h>[24m, [4m<sys/ipc.h>[24m, [4m<sys/stat.h>[24m, or [4m<unistd.h>[24m.
+
+              A type used to hold user IDs.  According to POSIX, this shall be an integer type.
+
+              [4mConforming[24m [4mto[24m: POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mchown[22m(2), [1mgetuid[22m(2), [1mgeteuid[22m(2), [1mgetresuid[22m(2), [1mgetpwnam[22m(3), [1mcredentials[22m(7)
+
+       [4muintmax_t[0m
+              [4mInclude[24m: [4m<stdint.h>[24m.  Alternatively, [4m<inttypes.h>[24m.
+
+              An unsigned integer type capable of representing any value of any unsigned integer type supported by the implementation.  According to the C language standard,
+              it shall be capable of storing values in the range [0, [1mUINTMAX_MAX[22m].
+
+              The macro [1mUINTMAX_C[22m() expands its argument to an integer constant of type [4muintmax_t[24m.
+
+              The length modifier for [4muintmax_t[24m for the [1mprintf[22m(3) and the [1mscanf[22m(3) families of functions is [1mj[22m; resulting commonly in [1m%ju [22mor [1m%jx [22mfor printing  [4muintmax_t[24m  val‐
+              ues.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mBugs[24m:  [4muintmax_t[24m is not large enough to represent values of type [4munsigned[24m [4m__int128[24m in implementations where [4munsigned[24m [4m__int128[24m is defined and [4munsigned[24m [4mlong[24m [4mlong[0m
+              is less than 128 bits wide.
+
+              [4mSee[24m [4malso[24m: the [4mintmax_t[24m type in this page.
+
+       [4muint[24mN[4m_t[0m
+              [4mInclude[24m: [4m<stdint.h>[24m.  Alternatively, [4m<inttypes.h>[24m.
+
+              [4muint8_t[24m, [4muint16_t[24m, [4muint32_t[24m, [4muint64_t[0m
+
+              An unsigned integer type of a fixed width of exactly N bits, N being the value specified in its type name.  According to the C language standard, they shall be
+              capable of storing values in the range [0, [1mUINT[22mN[1m_MAX[22m], substituting N by the appropriate number.
+
+              According  to  POSIX,  [4muint8_t[24m, [4muint16_t[24m, and [4muint32_t[24m are required; [4muint64_t[24m is only required in implementations that provide integer types with width 64; and
+              all other types of this form are optional.
+
+              The length modifiers for the [4muint[24mN[4m_t[24m types for the [1mprintf[22m(3) family of functions are expanded by macros of the forms [1mPRIu[22mN, [1mPRIo[22mN, [1mPRIx[22mN, and [1mPRIX[22mN (defined in
+              [4m<inttypes.h>[24m);  resulting for example in [1m%"PRIu32" [22mor [1m%"PRIx32" [22mfor printing [4muint32_t[24m values.  The length modifiers for the [4muint[24mN[4m_t[24m types for the [1mscanf[22m(3) fam‐
+              ily of functions are expanded by macros of the forms [1mSCNu[22mN, [1mSCNo[22mN, [1mSCNx[22mN, and [1mSCNX[22mN (defined in [4m<inttypes.h>[24m); resulting for example in [1m%"SCNu16" [22mor  [1m%"SCNx16"[0m
+              for scanning [4muint16_t[24m values.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4mintmax_t[24m, [4mint[24mN[4m_t[24m, and [4muintmax_t[24m types in this page.
+
+       [4muintptr_t[0m
+              [4mInclude[24m: [4m<stdint.h>[24m.  Alternatively, [4m<inttypes.h>[24m.
+
+              An  unsigned integer type such that any valid ([4mvoid[24m [4m*[24m) value can be converted to this type and back.  According to the C language standard, it shall be capable
+              of storing values in the range [0, [1mUINTPTR_MAX[22m].
+
+              The length modifier for [4muintptr_t[24m for the [1mprintf[22m(3) family of functions is expanded by the macros [1mPRIuPTR[22m, [1mPRIoPTR[22m, [1mPRIxPTR[22m,  and  [1mPRIXPTR  [22m(defined  in  [4m<int‐[0m
+              [4mtypes.h>[24m);  resulting  commonly  in [1m%"PRIuPTR" [22mor [1m%"PRIxPTR" [22mfor printing [4muintptr_t[24m values.  The length modifier for [4muintptr_t[24m for the [1mscanf[22m(3) family of func‐
+              tions is expanded by the macros [1mSCNuPTR, SCNoPTR, SCNxPTR[22m, and [1mSCNXPTR [22m(defined in [4m<inttypes.h>[24m); resulting commonly in [1m%"SCNuPTR" [22mor [1m%"SCNxPTR"  [22mfor  scanning
+              [4muintptr_t[24m values.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: the [4mintptr_t[24m and [4mvoid[24m [4m*[24m types in this page.
+
+       [4mva_list[0m
+              [4mInclude[24m: [4m<stdarg>[24m.  Alternatively, [4m<stdio.h>[24m, or [4m<wchar.h>[24m.
+
+              Used  by  functions  with  a  varying  number  of  arguments of varying types.  The function must declare an object of type [4mva_list[24m which is used by the macros
+              [1mva_start[22m(3), [1mva_arg[22m(3), [1mva_copy[22m(3), and [1mva_end[22m(3) to traverse the list of arguments.
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mva_start[22m(3), [1mva_arg[22m(3), [1mva_copy[22m(3), [1mva_end[22m(3)
+
+       [4mvoid[24m [4m*[0m
+              According to the C language standard, a pointer to any object type may be converted to a pointer to [4mvoid[24m and back.  POSIX further requires  that  any  pointer,
+              including pointers to functions, may be converted to a pointer to [4mvoid[24m and back.
+
+              Conversions from and to any other pointer type are done implicitly, not requiring casts at all.  Note that this feature prevents any kind of type checking: the
+              programmer should be careful not to convert a [4mvoid[24m [4m*[24m value to a type incompatible to that of the underlying data, because that would result in undefined behav‐
+              ior.
+
+              This  type  is  useful in function parameters and return value to allow passing values of any type.  The function will typically use some mechanism to know the
+              real type of the data being passed via a pointer to [4mvoid[24m.
+
+              A value of this type can't be dereferenced, as it would give a value of type [4mvoid[24m, which is not possible.  Likewise, pointer arithmetic is  not  possible  with
+              this  type.   However, in GNU C, pointer arithmetic is allowed as an extension to the standard; this is done by treating the size of a [4mvoid[24m or of a function as
+              1.  A consequence of this is that [4msizeof[24m is also allowed on [4mvoid[24m and on function types, and returns 1.
+
+              The conversion specifier for [4mvoid[24m [4m*[24m for the [1mprintf[22m(3) and the [1mscanf[22m(3) families of functions is [1mp[22m.
+
+              [4mVersions[24m: The POSIX requirement about compatibility between [4mvoid[24m [4m*[24m and function pointers was added in POSIX.1-2008 Technical Corrigendum 1 (2013).
+
+              [4mConforming[24m [4mto[24m: C99 and later; POSIX.1-2001 and later.
+
+              [4mSee[24m [4malso[24m: [1mmalloc[22m(3), [1mmemcmp[22m(3), [1mmemcpy[22m(3), [1mmemset[22m(3)
+
+              See also the [4mintptr_t[24m and [4muintptr_t[24m types in this page.
+
+[1mNOTES[0m
+       The structures described in this manual page shall contain, at least, the members shown in their definition, in no particular order.
+
+       Most of the integer types described in this page don't have a corresponding length modifier for the [1mprintf[22m(3) and the [1mscanf[22m(3) families  of  functions.   To  print  a
+       value  of an integer type that doesn't have a length modifier, it should be converted to [4mintmax_t[24m or [4muintmax_t[24m by an explicit cast.  To scan into a variable of an in‐
+       teger type that doesn't have a length modifier, an intermediate temporary variable of type [4mintmax_t[24m or [4muintmax_t[24m should be used.   When  copying  from  the  temporary
+       variable  to the destination variable, the value could overflow.  If the type has upper and lower limits, the user should check that the value is within those limits,
+       before actually copying the value.  The example below shows how these conversions should be done.
+
+   [1mConventions used in this page[0m
+       In "Conforming to" we only concern ourselves with C99 and later and POSIX.1-2001 and later.  Some types may be specified in earlier versions of  one  of  these  stan‐
+       dards, but in the interests of simplicity we omit details from earlier standards.
+
+       In  "Include",  we  first note the "primary" header(s) that define the type according to either the C or POSIX.1 standards.  Under "Alternatively", we note additional
+       headers that the standards specify shall define the type.
+
+[1mEXAMPLES[0m
+       The program shown below scans from a string and prints a value stored in a variable of an integer type that doesn't have a length modifier.  The  appropriate  conver‐
+       sions from and to [4mintmax_t[24m, and the appropriate range checks, are used as explained in the notes section above.
+
+       #include <stdint.h>
+       #include <stdio.h>
+       #include <stdlib.h>
+       #include <sys/types.h>
+
+       int
+       main (void)
+       {
+           static const char *const str = "500000 us in half a second";
+           suseconds_t us;
+           intmax_t    tmp;
+
+           /* Scan the number from the string into the temporary variable. */
+
+           sscanf(str, "%jd", &tmp);
+
+           /* Check that the value is within the valid range of suseconds_t. */
+
+           if (tmp < -1 || tmp > 1000000) {
+               fprintf(stderr, "Scanned value outside valid range!\n");
+               exit(EXIT_FAILURE);
+           }
+
+           /* Copy the value to the suseconds_t variable 'us'. */
+
+           us = tmp;
+
+           /* Even though suseconds_t can hold the value -1, this isn't
+              a sensible number of microseconds. */
+
+           if (us < 0) {
+               fprintf(stderr, "Scanned value shouldn't be negative!\n");
+               exit(EXIT_FAILURE);
+           }
+
+           /* Print the value. */
+
+           printf("There are %jd microseconds in half a second.\n",
+                   (intmax_t) us);
+
+           exit(EXIT_SUCCESS);
+       }
+
+[1mSEE ALSO[0m
+       [1mfeature_test_macros[22m(7), [1mstandards[22m(7)
+
+[1mCOLOPHON[0m
+       This  page  is  part  of  release 5.13 of the Linux [4mman-pages[24m project.  A description of the project, information about reporting bugs, and the latest version of this
+       page, can be found at https://www.kernel.org/doc/man-pages/.
+
+Linux                                                                             2021-03-22                                                             SYSTEM_DATA_TYPES(7)

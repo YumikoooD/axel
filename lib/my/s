@@ -1,0 +1,177 @@
+CTIME(3)                                                                  Linux Programmer's Manual                                                                  CTIME(3)
+
+[1mNAME[0m
+       asctime, ctime, gmtime, localtime, mktime, asctime_r, ctime_r, gmtime_r, localtime_r - transform date and time to broken-down time or ASCII
+
+[1mSYNOPSIS[0m
+       [1m#include <time.h>[0m
+
+       [1mchar *asctime(const struct tm *[4m[22mtm[24m[1m);[0m
+       [1mchar *asctime_r(const struct tm *restrict [4m[22mtm[24m[1m, char *restrict [4m[22mbuf[24m[1m);[0m
+
+       [1mchar *ctime(const time_t *[4m[22mtimep[24m[1m);[0m
+       [1mchar *ctime_r(const time_t *restrict [4m[22mtimep[24m[1m, char *restrict [4m[22mbuf[24m[1m);[0m
+
+       [1mstruct tm *gmtime(const time_t *[4m[22mtimep[24m[1m);[0m
+       [1mstruct tm *gmtime_r(const time_t *restrict [4m[22mtimep[24m[1m,[0m
+                           [1mstruct tm *restrict [4m[22mresult[24m[1m);[0m
+
+       [1mstruct tm *localtime(const time_t *[4m[22mtimep[24m[1m);[0m
+       [1mstruct tm *localtime_r(const time_t *restrict [4m[22mtimep[24m[1m,[0m
+                           [1mstruct tm *restrict [4m[22mresult[24m[1m);[0m
+
+       [1mtime_t mktime(struct tm *[4m[22mtm[24m[1m);[0m
+
+   Feature Test Macro Requirements for glibc (see [1mfeature_test_macros[22m(7)):
+
+       [1masctime_r[22m(), [1mctime_r[22m(), [1mgmtime_r[22m(), [1mlocaltime_r[22m():
+           _POSIX_C_SOURCE
+               || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+[1mDESCRIPTION[0m
+       The  [1mctime[22m(),  [1mgmtime[22m(),  and  [1mlocaltime[22m()  functions  all take an argument of data type [4mtime_t[24m, which represents calendar time.  When interpreted as an absolute time
+       value, it represents the number of seconds elapsed since the Epoch, 1970-01-01 00:00:00 +0000 (UTC).
+
+       The [1masctime[22m() and [1mmktime[22m() functions both take an argument representing broken-down time, which is a representation separated into year, month, day, and so on.
+
+       Broken-down time is stored in the structure [4mtm[24m, which is defined in [4m<time.h>[24m as follows:
+
+           struct tm {
+               int tm_sec;    /* Seconds (0-60) */
+               int tm_min;    /* Minutes (0-59) */
+               int tm_hour;   /* Hours (0-23) */
+               int tm_mday;   /* Day of the month (1-31) */
+               int tm_mon;    /* Month (0-11) */
+               int tm_year;   /* Year - 1900 */
+               int tm_wday;   /* Day of the week (0-6, Sunday = 0) */
+               int tm_yday;   /* Day in the year (0-365, 1 Jan = 0) */
+               int tm_isdst;  /* Daylight saving time */
+           };
+
+       The members of the [4mtm[24m structure are:
+
+       [4mtm_sec[24m    The number of seconds after the minute, normally in the range 0 to 59, but can be up to 60 to allow for leap seconds.
+
+       [4mtm_min[24m    The number of minutes after the hour, in the range 0 to 59.
+
+       [4mtm_hour[24m   The number of hours past midnight, in the range 0 to 23.
+
+       [4mtm_mday[24m   The day of the month, in the range 1 to 31.
+
+       [4mtm_mon[24m    The number of months since January, in the range 0 to 11.
+
+       [4mtm_year[24m   The number of years since 1900.
+
+       [4mtm_wday[24m   The number of days since Sunday, in the range 0 to 6.
+
+       [4mtm_yday[24m   The number of days since January 1, in the range 0 to 365.
+
+       [4mtm_isdst[24m  A flag that indicates whether daylight saving time is in effect at the time described.  The value is positive if daylight saving time is in effect, zero  if
+                 it is not, and negative if the information is not available.
+
+       The call [1mctime([4m[22mt[24m[1m) [22mis equivalent to [1masctime(localtime([4m[22mt[24m[1m))[22m.  It converts the calendar time [4mt[24m into a null-terminated string of the form
+
+           "Wed Jun 30 21:49:08 1993\n"
+
+       The  abbreviations for the days of the week are "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", and "Sat".  The abbreviations for the months are "Jan", "Feb", "Mar", "Apr",
+       "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", and "Dec".  The return value points to a statically allocated string which might be overwritten by  subsequent  calls
+       to any of the date and time functions.  The function also sets the external variables [4mtzname[24m, [4mtimezone[24m, and [4mdaylight[24m (see [1mtzset[22m(3)) with information about the current
+       timezone.  The reentrant version [1mctime_r[22m() does the same, but stores the string in a user-supplied buffer which should have room for at least 26 bytes.  It  need  not
+       set [4mtzname[24m, [4mtimezone[24m, and [4mdaylight[24m.
+
+       The [1mgmtime[22m() function converts the calendar time [4mtimep[24m to broken-down time representation, expressed in Coordinated Universal Time (UTC).  It may return NULL when the
+       year does not fit into an integer.  The return value points to a statically allocated struct which might be overwritten by subsequent calls to any  of  the  date  and
+       time functions.  The [1mgmtime_r[22m() function does the same, but stores the data in a user-supplied struct.
+
+       The  [1mlocaltime[22m() function converts the calendar time [4mtimep[24m to broken-down time representation, expressed relative to the user's specified timezone.  The function acts
+       as if it called [1mtzset[22m(3) and sets the external variables [4mtzname[24m with information about the current timezone, [4mtimezone[24m with the difference between Coordinated  Univer‐
+       sal  Time  (UTC)  and  local  standard time in seconds, and [4mdaylight[24m to a nonzero value if daylight savings time rules apply during some part of the year.  The return
+       value points to a statically allocated struct which might be overwritten by subsequent calls to any of the date and time functions.  The [1mlocaltime_r[22m()  function  does
+       the same, but stores the data in a user-supplied struct.  It need not set [4mtzname[24m, [4mtimezone[24m, and [4mdaylight[24m.
+
+       The  [1masctime[22m() function converts the broken-down time value [4mtm[24m into a null-terminated string with the same format as [1mctime[22m().  The return value points to a statically
+       allocated string which might be overwritten by subsequent calls to any of the date and time functions.  The [1masctime_r[22m() function does the same, but stores the  string
+       in a user-supplied buffer which should have room for at least 26 bytes.
+
+       The  [1mmktime[22m()  function  converts a broken-down time structure, expressed as local time, to calendar time representation.  The function ignores the values supplied by
+       the caller in the [4mtm_wday[24m and [4mtm_yday[24m fields.  The value specified in the [4mtm_isdst[24m field informs [1mmktime[22m() whether or not daylight saving time (DST) is in  effect  for
+       the  time supplied in the [4mtm[24m structure: a positive value means DST is in effect; zero means that DST is not in effect; and a negative value means that [1mmktime[22m() should
+       (use timezone information and system databases to) attempt to determine whether DST is in effect at the specified time.
+
+       The [1mmktime[22m() function modifies the fields of the [4mtm[24m structure as follows: [4mtm_wday[24m and [4mtm_yday[24m are set to values determined from the contents of the other  fields;  if
+       structure members are outside their valid interval, they will be normalized (so that, for example, 40 October is changed into 9 November); [4mtm_isdst[24m is set (regardless
+       of its initial value) to a positive value or to 0, respectively, to indicate whether DST is or is not in effect at the specified time.  Calling [1mmktime[22m() also sets the
+       external variable [4mtzname[24m with information about the current timezone.
+
+       If the specified broken-down time cannot be represented as calendar time (seconds since the Epoch), [1mmktime[22m() returns [4m(time_t)[24m [4m-1[24m and does not alter the members of the
+       broken-down time structure.
+
+[1mRETURN VALUE[0m
+       On success, [1mgmtime[22m() and [1mlocaltime[22m() return a pointer to a [4mstruct[24m [4mtm[24m.
+
+       On success, [1mgmtime_r[22m() and [1mlocaltime_r[22m() return the address of the structure pointed to by [4mresult[24m.
+
+       On success, [1masctime[22m() and [1mctime[22m() return a pointer to a string.
+
+       On success, [1masctime_r[22m() and [1mctime_r[22m() return a pointer to the string pointed to by [4mbuf[24m.
+
+       On success, [1mmktime[22m() returns the calendar time (seconds since the Epoch), expressed as a value of type [4mtime_t[24m.
+
+       On error, [1mmktime[22m() returns the value [4m(time_t)[24m [4m-1[24m.  The remaining functions return NULL on error.  On error, [4merrno[24m is set to indicate the error.
+
+[1mERRORS[0m
+       [1mEOVERFLOW[0m
+              The result cannot be represented.
+
+[1mATTRIBUTES[0m
+       For an explanation of the terms used in this section, see [1mattributes[22m(7).
+
+       ┌──────────────────────────────────────┬───────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+       │[1mInterface                             [22m│ [1mAttribute     [22m│ [1mValue                                                                                                        [22m│
+       ├──────────────────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+       │[1masctime[22m()                             │ Thread safety │ MT-Unsafe race:asctime locale                                                                                │
+       ├──────────────────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+       │[1masctime_r[22m()                           │ Thread safety │ MT-Safe locale                                                                                               │
+       ├──────────────────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+       │[1mctime[22m()                               │ Thread safety │ MT-Unsafe race:tmbuf race:asctime env locale                                                                 │
+       ├──────────────────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+       │[1mctime_r[22m(), [1mgmtime_r[22m(), [1mlocaltime_r[22m(), │ Thread safety │ MT-Safe env locale                                                                                           │
+       │[1mmktime[22m()                              │               │                                                                                                              │
+       ├──────────────────────────────────────┼───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+       │[1mgmtime[22m(), [1mlocaltime[22m()                 │ Thread safety │ MT-Unsafe race:tmbuf env locale                                                                              │
+       └──────────────────────────────────────┴───────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+[1mCONFORMING TO[0m
+       POSIX.1-2001.   C89 and C99 specify [1masctime[22m(), [1mctime[22m(), [1mgmtime[22m(), [1mlocaltime[22m(), and [1mmktime[22m().  POSIX.1-2008 marks [1masctime[22m(), [1masctime_r[22m(), [1mctime[22m(), and [1mctime_r[22m() as ob‐
+       solete, recommending the use of [1mstrftime[22m(3) instead.
+
+       POSIX doesn't specify the parameters of [1mctime_r[22m() to be [4mrestrict[24m; that is specific to glibc.
+
+[1mNOTES[0m
+       The four functions [1masctime[22m(), [1mctime[22m(), [1mgmtime[22m(), and [1mlocaltime[22m() return a pointer to static data and hence  are  not  thread-safe.   The  thread-safe  versions,  [1masc‐[0m
+       [1mtime_r[22m(), [1mctime_r[22m(), [1mgmtime_r[22m(), and [1mlocaltime_r[22m(), are specified by SUSv2.
+
+       POSIX.1-2001  says: "The [1masctime[22m(), [1mctime[22m(), [1mgmtime[22m(), and [1mlocaltime[22m() functions shall return values in one of two static objects: a broken-down time structure and an
+       array of type [4mchar[24m.  Execution of any of the functions may overwrite the information returned in either of these objects by any of the other functions."  This can oc‐
+       cur in the glibc implementation.
+
+       In many implementations, including glibc, a 0 in [4mtm_mday[24m is interpreted as meaning the last day of the preceding month.
+
+       The glibc version of [4mstruct[24m [4mtm[24m has additional fields
+
+           long tm_gmtoff;           /* Seconds east of UTC */
+           const char *tm_zone;      /* Timezone abbreviation */
+
+       defined when [1m_BSD_SOURCE [22mwas set before including [4m<time.h>[24m.  This is a BSD extension, present in 4.3BSD-Reno.
+
+       According  to  POSIX.1-2001,  [1mlocaltime[22m() is required to behave as though [1mtzset[22m(3) was called, while [1mlocaltime_r[22m() does not have this requirement.  For portable code,
+       [1mtzset[22m(3) should be called before [1mlocaltime_r[22m().
+
+[1mSEE ALSO[0m
+       [1mdate[22m(1), [1mgettimeofday[22m(2), [1mtime[22m(2), [1mutime[22m(2), [1mclock[22m(3), [1mdifftime[22m(3), [1mstrftime[22m(3), [1mstrptime[22m(3), [1mtimegm[22m(3), [1mtzset[22m(3), [1mtime[22m(7)
+
+[1mCOLOPHON[0m
+       This page is part of release 5.13 of the Linux [4mman-pages[24m project.  A description of the project, information about reporting bugs, and  the  latest  version  of  this
+       page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                                                  2021-03-22                                                                         CTIME(3)
